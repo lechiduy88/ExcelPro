@@ -7,7 +7,12 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const curlCommand = `curl -X POST http://localhost:5000/api/excel/process \\
+  // Lấy domain hiện tại (localhost hoặc domain production)
+  const apiUrl = typeof window !== 'undefined' 
+    ? `${window.location.protocol}//${window.location.host}/api/excel/process`
+    : 'http://localhost:5000/api/excel/process';
+
+  const curlCommand = `curl -X POST ${apiUrl} \\
   -F "file=@/path/to/your/file.xlsx" \\
   -o formatted_output.xlsx`;
 

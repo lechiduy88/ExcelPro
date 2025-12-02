@@ -156,6 +156,14 @@ export async function registerRoutes(
       const outputBuffer = await workbook.xlsx.writeBuffer();
       console.log("Output buffer size:", outputBuffer.byteLength);
 
+      // Tạo tên file với format: "Tổng hợp thông tin pháp luật mới YYYYMMDD.xlsx"
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const dateStr = `${year}${month}${day}`;
+      const filename = `Tong hop thong tin phap luat moi ${dateStr}.xlsx`;
+
       // Trả về file Excel đã định dạng
       res.setHeader(
         "Content-Type",
@@ -163,7 +171,7 @@ export async function registerRoutes(
       );
       res.setHeader(
         "Content-Disposition",
-        `attachment; filename="formatted_${req.file.originalname}"`
+        `attachment; filename="${encodeURIComponent(filename)}"`
       );
       
       // Gửi buffer trực tiếp
