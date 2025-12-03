@@ -13,8 +13,8 @@ export default function Home() {
     : 'http://localhost:5000/api/excel/process';
 
   const curlCommand = `curl -X POST ${apiUrl} \\
-  -F "file=@/path/to/your/file.xlsx" \\
-  -o formatted_output.xlsx`;
+  -F "file=@file.xlsx" \\
+  -o output.xlsx`;
 
   const handleCopyCurl = () => {
     navigator.clipboard.writeText(curlCommand);
@@ -185,7 +185,7 @@ export default function Home() {
             </button>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            Thay đổi <code className="bg-muted px-1 rounded">/path/to/your/file.xlsx</code> thành đường dẫn file của bạn
+            Thay <code className="bg-muted px-1 rounded">file.xlsx</code> thành tên file Excel của bạn (trong thư mục hiện tại)
           </p>
         </div>
       </div>

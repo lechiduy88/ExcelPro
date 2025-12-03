@@ -110,22 +110,31 @@ export async function registerRoutes(
                 cell.alignment = { vertical: "middle", horizontal: "center" };
               }
               
-              // Cột F (6): Chuyển thành hyperlink
-              if (colNumber === 6) {
+              // Cột F, G (6, 7): Căn cứ pháp lý - Tách text và link
+              if (colNumber === 6 || colNumber === 7) {
                 const cellValue = cell.value?.toString() || "";
-                // Tách text và link (format: "text\nlink")
-                const parts = cellValue.split("\\n");
-                if (parts.length >= 2) {
-                  const text = parts[0];
-                  const link = parts[parts.length - 1];
+                cell.alignment = { 
+                  vertical: "middle", 
+                  horizontal: "left",
+                  wrapText: true 
+                };
+                
+                // Tìm URL trong chuỗi (bắt đầu bằng http)
+                const httpIndex = cellValue.indexOf("http");
+                if (httpIndex !== -1) {
+                  // Tách text (trước http) và link (từ http đến hết)
+                  const text = cellValue.substring(0, httpIndex).trim();
+                  const link = cellValue.substring(httpIndex).trim();
                   
-                  // Tạo hyperlink
-                  cell.value = {
-                    text: text,
-                    hyperlink: link,
-                    tooltip: link
-                  };
-                  cell.font = { color: { argb: "FF0000FF" }, underline: true };
+                  if (text && link) {
+                    // Tạo hyperlink
+                    cell.value = {
+                      text: text,
+                      hyperlink: link,
+                      tooltip: link
+                    };
+                    cell.font = { color: { argb: "FF0000FF" }, underline: true };
+                  }
                 }
               }
             });
