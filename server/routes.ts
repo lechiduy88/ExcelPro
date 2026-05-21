@@ -5,7 +5,14 @@ import * as XLSX from "xlsx";
 import ExcelJS from "exceljs";
 
 // Cấu hình multer để lưu file vào memory - hỗ trợ nhiều file
-const upload = multer({ storage: multer.memoryStorage() });
+// Tăng giới hạn kích thước file lên 100MB
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 100 * 1024 * 1024, // 100MB
+    files: 10 // Tối đa 10 files
+  }
+});
 
 // Mapping tiêu đề song ngữ Việt - Trung (phồn thể)
 const BILINGUAL_HEADERS: { [key: string]: string } = {
