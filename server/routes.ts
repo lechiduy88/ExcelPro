@@ -261,7 +261,7 @@ function getOutputFilename(): string {
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
-  return `Tong hop thong tin phap luat moi ${year}${month}${day}.xlsx`;
+  return `L Tổng hợp thông tin pháp luật mới ${year}${month}${day}.xlsx`;
 }
 
 export async function registerRoutes(
